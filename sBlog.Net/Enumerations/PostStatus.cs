@@ -23,4 +23,20 @@ namespace sBlog.Net.Enumerations
         pub = 2,
         pri = 1
     }
+
+    /// <summary>
+    /// EntryType = 1 for Posts and EntryType = 2 for Pages
+    /// </summary>
+    public enum EntryTypeDef
+    {
+        /// <summary>
+        /// EntryType = 1 for posts
+        /// </summary>
+        Posts = 1, // EntryType = 1 for posts
+        /// <summary>
+        /// EntryType = 2 for pages
+        /// </summary>
+        Pages = 2 // EntryType = 2 for pages
+    }
+
 }

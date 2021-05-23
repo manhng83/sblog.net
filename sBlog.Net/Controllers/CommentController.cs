@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using sBlog.Net.Domain.Interfaces;
 using sBlog.Net.Akismet.Interfaces;
 using sBlog.Net.FluentExtensions;
+using sBlog.Net.Enumerations;
 
 namespace sBlog.Net.Controllers
 {
@@ -144,7 +145,7 @@ namespace sBlog.Net.Controllers
         private ActionResult RedirectByPostType(CommentViewModel commentViewModel, bool commentingStatus)
         {
             var commentStatus = commentingStatus ? "comment-posted" : "comment-errored";
-            if (commentViewModel.Post.EntryType == 1)
+            if (commentViewModel.Post.EntryType == (byte)EntryTypeDef.Posts)
             {
                 return RedirectToRoute("IndividualPost", new
                 {

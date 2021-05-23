@@ -79,8 +79,12 @@ namespace sBlog.Net.Areas.Admin.Controllers
                     return SaveAndRedirect(postModel);
                 }
 
-                var tags = _tagRepository.GetTagEntities(postModel.Tags.Split(',').ToList());
-                _tagRepository.AddTags(tags);
+                if (postModel != null && postModel.Tags != null)
+                {
+                    var tags = _tagRepository.GetTagEntities(postModel.Tags.Split(',').ToList());
+                    _tagRepository.AddTags(tags);
+                }
+
                 var postEntity = postModel.ToPostEntity(_tagRepository);
                 postEntity.PostAddedDate = DateTime.Now;
                 postEntity.PostEditedDate = postEntity.PostAddedDate;
@@ -132,8 +136,12 @@ namespace sBlog.Net.Areas.Admin.Controllers
 
         private void SavePostInternal(PostViewModel postModel)
         {
-            var tags = _tagRepository.GetTagEntities(postModel.Tags.Split(',').ToList());
-            _tagRepository.AddTags(tags);
+            if (postModel != null && postModel.Tags != null)
+            {
+                var tags = _tagRepository.GetTagEntities(postModel.Tags.Split(',').ToList());
+                _tagRepository.AddTags(tags);
+            }
+
             var postEntity = postModel.ToPostEntity(_tagRepository);
             postEntity.PostEditedDate = DateTime.Now;
 

@@ -32,17 +32,22 @@ namespace sBlog.Net.Domain.Entities
         public int PostID { get; set; }
         [Column]
         public string PostTitle { get; set; }
-        [Column] public string PostUrl { get; set; }
-        [Column] public string PostContent { get; set; }
-        [Column] public DateTime PostAddedDate { get; set; }
-        [Column] public DateTime? PostEditedDate { get; set; }
-        [Column] public int OwnerUserID { get; set; }
-        
+        [Column]
+        public string PostUrl { get; set; }
+        [Column]
+        public string PostContent { get; set; }
+        [Column]
+        public DateTime PostAddedDate { get; set; }
+        [Column]
+        public DateTime? PostEditedDate { get; set; }
+        [Column]
+        public int OwnerUserID { get; set; }
+
         [Column]
         [DisplayName("user can add comments?")]
         public bool UserCanAddComments { get; set; }
 
-        [Column] 
+        [Column]
         [DisplayName("provide sharing options")]
         public bool CanBeShared { get; set; }
 
@@ -50,7 +55,8 @@ namespace sBlog.Net.Domain.Entities
         [DisplayName("mark as private")]
         public bool IsPrivate { get; set; }
 
-        [Column] public byte EntryType { get; set; } /* 1 - Post, 2 - Page */
+        [Column]
+        public byte EntryType { get; set; } /* 1 - Post, 2 - Page */
 
         [Column]
         public int? Order { get; set; }
@@ -80,7 +86,7 @@ namespace sBlog.Net.Domain.Entities
         /* Properties that are independent of the database content */
         public string ItemType
         {
-            get { return EntryType == 1 ? "post" : "page"; }
+            get { return EntryType == (byte)EntryTypeDef.Posts ? "post" : "page"; }
         }
 
         public string PostYear
@@ -99,5 +105,22 @@ namespace sBlog.Net.Domain.Entities
             }
         }
         #endregion
+
+
+        /// <summary>
+        /// EntryType = 1 for Posts and EntryType = 2 for Pages
+        /// </summary>
+        public static class EntryTypeDef
+        {
+            /// <summary>
+            /// EntryType = 1 for posts
+            /// </summary>
+            public static short Posts = 1; // EntryType = 1 for posts
+            /// <summary>
+            /// EntryType = 2 for pages
+            /// </summary>
+            public static short Pages = 2; // EntryType = 2 for pages
+        }
+
     }
 }

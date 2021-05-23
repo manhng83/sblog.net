@@ -23,6 +23,7 @@ using sBlog.Net.Domain.Entities;
 using sBlog.Net.Domain.Interfaces;
 using sBlog.Net.FluentExtensions;
 using sBlog.Net.Models;
+using sBlog.Net.Enumerations;
 
 namespace sBlog.Net.Controllers
 {
@@ -59,7 +60,7 @@ namespace sBlog.Net.Controllers
                                        .Take(_postsPerPage).Select(u => new AuthorModel { UserID = u.UserID, UserName = u.UserName, UserDisplayName = u.UserDisplayName }).ToList();
             authorItems.ForEach(author =>
                 {
-                    author.Posts = posts.Where(p => p.EntryType == 1 && p.OwnerUserID == author.UserID && !p.IsPrivate).ToList();
+                    author.Posts = posts.Where(p => p.EntryType == (byte)EntryTypeDef.Posts && p.OwnerUserID == author.UserID && !p.IsPrivate).ToList();
                 });
             authorListingViewModel.Authors = authorItems;
             return View(authorListingViewModel);

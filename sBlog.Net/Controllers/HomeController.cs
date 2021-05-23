@@ -24,6 +24,7 @@ using sBlog.Net.Domain.Entities;
 using sBlog.Net.Domain.Interfaces;
 using sBlog.Net.Models;
 using sBlog.Net.FluentExtensions;
+using sBlog.Net.Enumerations;
 
 namespace sBlog.Net.Controllers
 {
@@ -98,7 +99,7 @@ namespace sBlog.Net.Controllers
         public ActionResult View(string year, string month, string url, string status)
         {
             var allPosts = GetPostsInternal();
-            var currentPost = allPosts.SingleOrDefault(p => p.PostUrl == url && p.EntryType == 1);
+            var currentPost = allPosts.SingleOrDefault(p => p.PostUrl == url && p.EntryType == (byte)EntryTypeDef.Posts);
 
             if (currentPost == null)
             {

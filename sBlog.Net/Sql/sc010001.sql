@@ -6,7 +6,7 @@ IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo
 BEGIN
 	CREATE TABLE [dbo].[Schema](
 		[SchemaRecordId] [int] IDENTITY(1,1) NOT NULL,
-		[ScriptName] [varchar](50) NOT NULL,
+		[ScriptName] [nvarchar](50) NOT NULL,
 		[MajorVersion] [smallint] NOT NULL,
 		[MinorVersion] [smallint] NOT NULL,
 		[ScriptVersion] [smallint] NOT NULL,
@@ -32,8 +32,8 @@ GO
 IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'sBlog_Settings')
 BEGIN
 	CREATE TABLE [dbo].[sBlog_Settings](
-		[KeyName] [varchar](50) NOT NULL,
-		[KeyValue] [varchar](max) NULL
+		[KeyName] [nvarchar](50) NOT NULL,
+		[KeyValue] [nvarchar](max) NULL
 	) ON [PRIMARY]
 END
 
@@ -154,15 +154,15 @@ IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo
 BEGIN
 	CREATE TABLE [dbo].[Users](
 		[UserID] [int] IDENTITY(1,1) NOT NULL,
-		[UserName] [varchar](50) NOT NULL,
-		[Password] [varchar](50) NOT NULL,
-		[UserEmailAddress] [varchar](50) NOT NULL,
-		[UserDisplayName] [varchar](50) NULL,
+		[UserName] [nvarchar](50) NOT NULL,
+		[Password] [nvarchar](50) NOT NULL,
+		[UserEmailAddress] [nvarchar](50) NOT NULL,
+		[UserDisplayName] [nvarchar](50) NULL,
 		[UserActiveStatus] [int] NULL,
-		[ActivationKey] [varchar](50) NULL,
-		[OneTimeToken] [varchar](50) NULL,
-		[UserCode] [varchar](128) NULL,
-		[UserSite] [varchar](128) NULL,
+		[ActivationKey] [nvarchar](50) NULL,
+		[OneTimeToken] [nvarchar](50) NULL,
+		[UserCode] [nvarchar](128) NULL,
+		[UserSite] [nvarchar](128) NULL,
 		[LastLoginDate] [datetime] NULL,
 	 CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 	(
@@ -194,9 +194,9 @@ IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo
 BEGIN
 	CREATE TABLE [dbo].[Posts](
 		[PostID] [int] IDENTITY(1,1) NOT NULL,
-		[PostTitle] [varchar](255) NOT NULL,
-		[PostContent] [varchar](max) NOT NULL,
-		[PostUrl] [varchar](max) NOT NULL,
+		[PostTitle] [nvarchar](255) NOT NULL,
+		[PostContent] [nvarchar](max) NOT NULL,
+		[PostUrl] [nvarchar](max) NOT NULL,
 		[PostAddedDate] [datetime] NOT NULL,
 		[PostEditedDate] [datetime] NULL,
 		[OwnerUserID] [int] NOT NULL,
@@ -249,10 +249,10 @@ IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo
 BEGIN
 	CREATE TABLE [dbo].[Comments](
 		[CommentID] [int] IDENTITY(1,1) NOT NULL,
-		[CommentUserFullName] [varchar](50) NOT NULL,
-		[CommenterEmail] [varchar](50) NULL,
-		[CommenterSite] [varchar](50) NULL,
-		[CommentContent] [varchar](512) NOT NULL,
+		[CommentUserFullName] [nvarchar](50) NOT NULL,
+		[CommenterEmail] [nvarchar](50) NULL,
+		[CommenterSite] [nvarchar](50) NULL,
+		[CommentContent] [nvarchar](512) NOT NULL,
 		[CommentPostedDate] [datetime] NOT NULL,
 		[CommentStatus] [int] NOT NULL,
 		[PostID] [int] NOT NULL,
@@ -297,8 +297,8 @@ IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo
 BEGIN
 	CREATE TABLE [dbo].[Categories](
 		[CategoryID] [int] IDENTITY(1,1) NOT NULL,
-		[CategoryName] [varchar](50) NOT NULL,
-		[CategorySlug] [varchar](MAX) NOT NULL,
+		[CategoryName] [nvarchar](50) NOT NULL,
+		[CategorySlug] [nvarchar](MAX) NOT NULL,
 	 CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED 
 	(
 		[CategoryID] ASC
@@ -327,8 +327,8 @@ IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'dbo
 BEGIN
 	CREATE TABLE [dbo].[Tags](
 		[TagID] [int] IDENTITY(1,1) NOT NULL,
-		[TagName] [varchar](50) NOT NULL,
-		[TagSlug] [varchar](MAX) NOT NULL,
+		[TagName] [nvarchar](50) NOT NULL,
+		[TagSlug] [nvarchar](MAX) NOT NULL,
 	 CONSTRAINT [PK_Tags] PRIMARY KEY CLUSTERED 
 	(
 		[TagID] ASC
@@ -427,8 +427,8 @@ BEGIN
 CREATE TABLE [dbo].[Errors](
 	[ErrorID] [int] IDENTITY(1,1) NOT NULL,
 	[ErrorDateTime] [datetime] NOT NULL,
-	[ErrorMessage] [varchar](500) NOT NULL,
-	[ErrorDescription] [varchar](max) NOT NULL,
+	[ErrorMessage] [nvarchar](500) NOT NULL,
+	[ErrorDescription] [nvarchar](max) NOT NULL,
  CONSTRAINT [PK_Errors] PRIMARY KEY CLUSTERED 
 (
 	[ErrorID] ASC

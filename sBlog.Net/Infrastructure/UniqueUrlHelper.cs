@@ -19,6 +19,7 @@
 using System.Linq;
 using sBlog.Net.Domain.Generators;
 using sBlog.Net.Domain.Interfaces;
+using sBlog.Net.Enumerations;
 
 namespace sBlog.Net.Infrastructure
 {
@@ -27,7 +28,7 @@ namespace sBlog.Net.Infrastructure
         public static string FindUniqueUrl(IPost postRepository, string currentUrl, byte entryType, int? excludeId = null)
         {
             var allPosts = postRepository.GetAllPostsOrPages(false);
-            var postEntities = entryType == 1 ? allPosts.Where(p => p.EntryType == 1) : allPosts.Where(p => p.EntryType == 2);
+            var postEntities = entryType == 1 ? allPosts.Where(p => p.EntryType == (byte)EntryTypeDef.Posts) : allPosts.Where(p => p.EntryType == (byte)EntryTypeDef.Pages);
             if (excludeId.HasValue)
             {
                 postEntities = postEntities.Where(p => p.PostID != excludeId);

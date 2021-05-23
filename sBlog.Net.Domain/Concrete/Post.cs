@@ -122,7 +122,7 @@ namespace sBlog.Net.Domain.Concrete
         /// <returns>a list of PostEntity objects</returns>
         public List<PostEntity> GetPosts()
         {
-            var postEntities = _postsTable.Where(p => !p.IsPrivate && p.EntryType == 1)
+            var postEntities = _postsTable.Where(p => !p.IsPrivate && p.EntryType == EntryTypeDef.Posts)
                              .OrderByDescending(p => p.PostEditedDate)
                              .ToList();
             return PostProcessEntities(postEntities);
@@ -137,7 +137,7 @@ namespace sBlog.Net.Domain.Concrete
         /// <returns>a list of PostEntity objects</returns>
         public List<PostEntity> GetPosts(int userID)
         {
-            var postEntities = _postsTable.Where(p => (!p.IsPrivate && p.EntryType == 1) || (p.IsPrivate && p.EntryType == 1 && p.OwnerUserID == userID))
+            var postEntities = _postsTable.Where(p => (!p.IsPrivate && p.EntryType == EntryTypeDef.Posts) || (p.IsPrivate && p.EntryType == EntryTypeDef.Posts && p.OwnerUserID == userID))
                              .OrderByDescending(p => p.PostEditedDate)
                              .ToList();
             return PostProcessEntities(postEntities);
@@ -168,7 +168,7 @@ namespace sBlog.Net.Domain.Concrete
         /// <returns>a list of PostEntity objects</returns>
         public List<PostEntity> GetPages()
         {
-            var postEntities = _postsTable.Where(p => !p.IsPrivate && p.EntryType == 2)
+            var postEntities = _postsTable.Where(p => !p.IsPrivate && p.EntryType == EntryTypeDef.Pages)
                                .ToList();
             return PostProcessEntities(postEntities);
         }
@@ -182,7 +182,7 @@ namespace sBlog.Net.Domain.Concrete
         /// <returns>a list of PostEntity objects</returns>
         public List<PostEntity> GetPages(int userID)
         {
-            var postEntities = _postsTable.Where(p => (!p.IsPrivate && p.EntryType == 2) || (p.IsPrivate && p.EntryType == 2 && p.OwnerUserID == userID))
+            var postEntities = _postsTable.Where(p => (!p.IsPrivate && p.EntryType == EntryTypeDef.Pages) || (p.IsPrivate && p.EntryType == EntryTypeDef.Pages && p.OwnerUserID == userID))
                                .ToList();
             return PostProcessEntities(postEntities);
         }
@@ -234,7 +234,7 @@ namespace sBlog.Net.Domain.Concrete
             }
             catch
             {
-                
+
             }
         }
 
@@ -283,7 +283,7 @@ namespace sBlog.Net.Domain.Concrete
                     _categoryRepository.DeletePostCategoryMapping(postID);
                     _tagRepository.DeleteTagsForPost(postID);
                 }
-                
+
                 // delete the post
                 DeletePost(postID);
 
@@ -339,5 +339,22 @@ namespace sBlog.Net.Domain.Concrete
         {
             Dispose(false);
         }
+
+
+        /// <summary>
+        /// EntryType = 1 for Posts and EntryType = 2 for Pages
+        /// </summary>
+        public static class EntryTypeDef
+        {
+            /// <summary>
+            /// EntryType = 1 for posts
+            /// </summary>
+            public static short Posts = 1; // EntryType = 1 for posts
+            /// <summary>
+            /// EntryType = 2 for pages
+            /// </summary>
+            public static short Pages = 2; // EntryType = 2 for pages
+        }
+
     }
 }

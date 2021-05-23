@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using sBlog.Net.Domain.Interfaces;
 using sBlog.Net.Domain.Entities;
+using sBlog.Net.Enumerations;
 
 namespace sBlog.Net.Tests.MockObjects
 {
@@ -41,7 +42,7 @@ namespace sBlog.Net.Tests.MockObjects
 
         public List<PostEntity> GetPages()
         {
-            var postEntities = _postsTable.Where(p => !p.IsPrivate && p.EntryType == 2)
+            var postEntities = _postsTable.Where(p => !p.IsPrivate && p.EntryType == (byte)EntryTypeDef.Pages)
                              .OrderByDescending(p => p.PostEditedDate)
                              .ToList();
             return PostProcessEntities(postEntities);
@@ -49,7 +50,7 @@ namespace sBlog.Net.Tests.MockObjects
 
         public List<PostEntity> GetPages(int userID)
         {
-            var postEntities = _postsTable.Where(p => (!p.IsPrivate && p.EntryType == 2) || (p.IsPrivate && p.EntryType == 2 && p.OwnerUserID == userID))
+            var postEntities = _postsTable.Where(p => (!p.IsPrivate && p.EntryType == (byte)EntryTypeDef.Pages) || (p.IsPrivate && p.EntryType == (byte)EntryTypeDef.Pages && p.OwnerUserID == userID))
                              .OrderByDescending(p => p.PostEditedDate)
                              .ToList();
             return PostProcessEntities(postEntities);
@@ -84,7 +85,7 @@ namespace sBlog.Net.Tests.MockObjects
 
         public List<PostEntity> GetPosts()
         {
-            var postEntities = _postsTable.Where(p => !p.IsPrivate && p.EntryType == 1)
+            var postEntities = _postsTable.Where(p => !p.IsPrivate && p.EntryType == (byte)EntryTypeDef.Posts)
                              .OrderByDescending(p => p.PostEditedDate)
                              .ToList();
             return PostProcessEntities(postEntities);
@@ -92,7 +93,7 @@ namespace sBlog.Net.Tests.MockObjects
 
         public List<PostEntity> GetPosts(int userID)
         {
-            var postEntities = _postsTable.Where(p => (!p.IsPrivate && p.EntryType == 1) || (p.IsPrivate && p.EntryType == 1 && p.OwnerUserID == userID))
+            var postEntities = _postsTable.Where(p => (!p.IsPrivate && p.EntryType == (byte)EntryTypeDef.Posts) || (p.IsPrivate && p.EntryType == (byte)EntryTypeDef.Posts && p.OwnerUserID == userID))
                              .OrderByDescending(p => p.PostEditedDate)
                              .ToList();
             return PostProcessEntities(postEntities);

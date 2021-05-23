@@ -9,22 +9,24 @@
 // Homepage: http://sblogproject.net
 // Github: http://github.com/karthik25/sBlog.Net
 
-// This project is licensed under the BSD license.  
+// This project is licensed under the BSD license.
 // See the License.txt file for more information.
 
 /* *********************************************** */
 
-#endregion
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
-using sBlog.Net.Areas.Admin.Models;
+#endregion Disclaimer/License Info
+
 using sBlog.Net.CustomExceptions;
+using sBlog.Net.Domain.Entities;
 using sBlog.Net.Domain.Interfaces;
+using sBlog.Net.Enumerations;
 using sBlog.Net.FluentExtensions;
 using sBlog.Net.Models;
-using sBlog.Net.Domain.Entities;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web.Mvc;
 
 namespace sBlog.Net.Controllers
 {
@@ -46,7 +48,13 @@ namespace sBlog.Net.Controllers
         public ActionResult Index(string pageUrl, string status)
         {
             var pages = GetPages();
-            var page = pages.SingleOrDefault(p => p.PostUrl == pageUrl && p.EntryType == 2);
+
+            foreach (var item in pages)
+            {
+                Debug.WriteLine(item.PostUrl);
+            }
+
+            var page = pages.FirstOrDefault(p => p.PostUrl == pageUrl && p.EntryType == (byte)EntryTypeDef.Pages);
 
             if (page == null)
             {
@@ -126,7 +134,7 @@ namespace sBlog.Net.Controllers
         private BlogMenuViewModel GetBlogMenus(List<PostEntity> pages, string requestPage)
         {
             var viewModel = new BlogMenuViewModel();
-            var pagesList = new List<BlogMenuOption> {new BlogMenuOption {Title = "Home", Url = "/", Selected = false}};
+            var pagesList = new List<BlogMenuOption> { new BlogMenuOption { Title = "Home", Url = "/", Selected = false } };
             pages.ForEach(p => pagesList.Add(new BlogMenuOption { Title = p.PostTitle, Url = p.PostUrl, Selected = p.PostUrl == requestPage }));
             if (!pagesList.Any(p => p.Selected) && requestPage == string.Empty)
             {

@@ -9,20 +9,15 @@
 // Homepage: http://sblogproject.net
 // Github: http://github.com/karthik25/sBlog.Net
 
-// This project is licensed under the BSD license.  
+// This project is licensed under the BSD license.
 // See the License.txt file for more information.
 
 /* *********************************************** */
 
-#endregion
-using System;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using StackExchange.Profiling;
+#endregion Disclaimer/License Info
+
 using sBlog.Net.Areas.Admin.Models;
+using sBlog.Net.Binders;
 using sBlog.Net.Configuration;
 using sBlog.Net.CustomExceptions;
 using sBlog.Net.CustomViewEngines;
@@ -30,13 +25,19 @@ using sBlog.Net.DB.Enumerations;
 using sBlog.Net.DB.Helpers;
 using sBlog.Net.DB.Services;
 using sBlog.Net.DependencyManagement;
+using sBlog.Net.Filters;
 using sBlog.Net.Infrastructure;
 using sBlog.Net.Mappers;
 using sBlog.Net.Models;
-using sBlog.Net.Binders;
-using System.Web.Security;
+using StackExchange.Profiling;
+using System;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Security.Principal;
-using sBlog.Net.Filters;
+using System.Web;
+using System.Web.Mvc;
+using System.Web.Routing;
+using System.Web.Security;
 
 namespace sBlog.Net
 {
@@ -117,10 +118,10 @@ namespace sBlog.Net
                             new { controller = "Errors", action = "Index" });
 
             routes.MapRoute("SetupError", "under-construction",
-                            new {controller = "Maintenance", action = "Index"});
+                            new { controller = "Maintenance", action = "Index" });
 
             routes.MapRoute("InvalidTheme", "invalid-theme",
-                            new { controller = "Maintenance", action ="InvalidTheme" });
+                            new { controller = "Maintenance", action = "InvalidTheme" });
 
             routes.MapRoute("Default", "{controller}/{action}/{id}",
                             new { controller = "Home", action = "Index", id = UrlParameter.Optional });
@@ -140,8 +141,8 @@ namespace sBlog.Net
 
             SetupCustomModelBinders();
 
-            VerifyInstallation();
-            
+            //VerifyInstallation();
+
             SetupViewEngines();
         }
 
@@ -157,7 +158,7 @@ namespace sBlog.Net
         {
             MiniProfiler.Stop();
         }
-        
+
         protected void Application_Error()
         {
             var exception = Server.GetLastError();
@@ -185,9 +186,11 @@ namespace sBlog.Net
                 case SetupStatusCode.HasUpdates:
                     Response.Redirect(urlHelper.RouteUrl("UpdateDatabase"), true);
                     break;
+
                 case SetupStatusCode.DatabaseNotSetup:
                     Response.Redirect(urlHelper.RouteUrl("InitializeDatabase"), true);
                     break;
+
                 case SetupStatusCode.DatabaseError:
                     Response.Redirect(urlHelper.RouteUrl("SetupError"), true);
                     break;
@@ -221,7 +224,7 @@ namespace sBlog.Net
         private void SetupViewEngines()
         {
             ViewEngines.Engines.Clear();
-            var appStatus = (SetupStatus) Application["Installation_Status"];
+            var appStatus = (SetupStatus)Application["Installation_Status"];
             if (appStatus == null || appStatus.StatusCode == SetupStatusCode.NoUpdates)
             {
                 var settings = InstanceFactory.CreateSettingsInstance();
@@ -231,7 +234,7 @@ namespace sBlog.Net
             else
             {
                 ViewEngines.Engines.Add(new RazorViewEngine());
-            }            
+            }
         }
 
         private void VerifyInstallation()
@@ -248,7 +251,7 @@ namespace sBlog.Net
             errorLogger.Log();
         }
 
-        void MvcApplication_PostAuthenticateRequest(object sender, EventArgs e)
+        private void MvcApplication_PostAuthenticateRequest(object sender, EventArgs e)
         {
             var authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookie != null)

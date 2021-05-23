@@ -22,6 +22,7 @@ using sBlog.Net.Areas.Admin.Models;
 using sBlog.Net.Models;
 using sBlog.Net.Domain.Entities;
 using sBlog.Net.FluentExtensions;
+using sBlog.Net.Enumerations;
 
 namespace sBlog.Net.Binders
 {
@@ -48,12 +49,12 @@ namespace sBlog.Net.Binders
                                             }
                                 };
 
-            postModel.Post.Order = postModel.Post.EntryType == 2 ? (int?)GetOrder(bindingContext.GetValue("Post.Order")) : null;
+            postModel.Post.Order = postModel.Post.EntryType == (byte)EntryTypeDef.Pages ? (int?)GetOrder(bindingContext.GetValue("Post.Order")) : null;
 
             IModelBinder ckBinder = new CheckBoxListViewModelBinder();
             postModel.Categories = (CheckBoxListViewModel)ckBinder.BindModel(controllerContext, bindingContext);
 
-            if (postModel.Post.EntryType == 1)
+            if (postModel.Post.EntryType == (byte)EntryTypeDef.Posts)
             {
                 if (!postModel.Categories.Items.Any(c => c.IsChecked))
                 {

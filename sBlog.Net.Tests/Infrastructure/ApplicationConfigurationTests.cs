@@ -21,7 +21,7 @@ namespace sBlog.Net.Tests.Infrastructure
         {
             var connectionString = ApplicationConfiguration.ConnectionString;
             Assert.IsNotNull(connectionString);
-            Assert.AreEqual("Server=localhost;Database=sblog;user id=msuser1;password=msuser1;", connectionString);
+            Assert.AreEqual(@"Server=.\SQLEXPRESS;Database=sBlog;user id=sa;password=123456;", connectionString);
         }
 
         [TestMethod]
